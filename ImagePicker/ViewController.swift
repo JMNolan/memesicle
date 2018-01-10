@@ -15,6 +15,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var topText: UITextField!
     @IBOutlet weak var scrollView: UIScrollView!
     
+    var keyboardHeight: CGFloat = 0.0
     let imagePicker = UIImagePickerController()
     
     //formatting the text boxes used to create the meme
@@ -122,13 +123,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @objc func keyboardWillShow (notification: NSNotification){
-        scrollView.frame.origin.y -= getKeyboardHeight(notification: notification)
-        print(getKeyboardHeight(notification: notification))
+        keyboardHeight = getKeyboardHeight(notification: notification)
+        scrollView.frame.origin.y -= keyboardHeight
+        print(keyboardHeight)
     }
     
     @objc func keyboardWillHide (notification: NSNotification){
-        print(getKeyboardHeight(notification: notification))
-        scrollView.frame.origin.y += getKeyboardHeight(notification: notification)
+        print(keyboardHeight)
+        scrollView.frame.origin.y += keyboardHeight
     }
     
     @IBAction func pickAnImageFromAlbum(_ sender: Any) {
