@@ -13,6 +13,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var imagePickerView: UIImageView!
     @IBOutlet weak var bottomText: UITextField!
     @IBOutlet weak var topText: UITextField!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     let imagePicker = UIImagePickerController()
     
@@ -21,8 +22,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         NSAttributedStringKey.strokeColor.rawValue: UIColor.black,
         NSAttributedStringKey.foregroundColor.rawValue: UIColor.white,
         NSAttributedStringKey.font.rawValue: (UIFont.init(name: "HelveticaNeue-CondensedBlack", size: 40))!,
-        NSAttributedStringKey.strokeWidth.rawValue: 0,
-        NSAttributedStringKey.backgroundColor.rawValue: UIColor.clear
+        NSAttributedStringKey.strokeWidth.rawValue: -4,
+        NSAttributedStringKey.backgroundColor.rawValue: UIColor.clear,
+        
     ]
     
     //property template for generating new meme images
@@ -41,10 +43,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
-            imagePickerView.image = image
-            imagePickerView.contentMode = .scaleAspectFit
-        }
+        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        imagePickerView.image = image
+        imagePickerView.contentMode = .scaleAspectFit
         dismiss(animated: true, completion: nil)
     }
     
@@ -93,15 +94,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        topText.text = "TOP"
-        topText.textAlignment = .center
         topText.defaultTextAttributes = memeTextAttributes
-        bottomText.text = "BOTTOM"
-        bottomText.textAlignment = .center
         bottomText.defaultTextAttributes = memeTextAttributes
+        topText.textAlignment = .center
+        bottomText.textAlignment = .center
 
         imagePicker.delegate = self
-        //cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -124,24 +122,39 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @objc func keyboardWillShow (notification: NSNotification){
-        
-        imagePickerView.frame.origin.y -= (getKeyboardHeight(notification: notification))
+        scrollView.frame.origin.y -= getKeyboardHeight(notification: notification)
+        print(getKeyboardHeight(notification: notification))
     }
     
     @objc func keyboardWillHide (notification: NSNotification){
-        imagePickerView.frame.origin.y += (getKeyboardHeight(notification: notification))
+        print(getKeyboardHeight(notification: notification))
+        scrollView.frame.origin.y += getKeyboardHeight(notification: notification)
     }
     
     @IBAction func pickAnImageFromAlbum(_ sender: Any) {
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .photoLibrary
-        
+        imagePicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
         present(imagePicker, animated: true, completion: nil)
     }
     
     @IBAction func pickAnImageFromCamera(_ sender: Any){
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .camera
+        if UIImagePickerController.isSourceTypeAvailable(.camera){
+            imagePicker.allowsEditing = false
+            imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+            imagePicker.cameraCaptureMode = .photo
+            imagePicker.modalPresentationStyle = .fullScreen
+            present(imagePicker, animated: true, completion: nil)
+        }else{
+            noCamera()
+        }
+    }
+    
+    func noCamera(){
+        let noCameraAlert = UIAlertController(title: "No Camera", message: "Sorry this device has no camera.", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        noCameraAlert.addAction(okAction)
+        present(noCameraAlert, animated: true, completion: nil)
     }
 }
 
