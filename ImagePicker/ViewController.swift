@@ -14,6 +14,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var bottomText: UITextField!
     @IBOutlet weak var topText: UITextField!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var fromAlbumButton: UIBarButtonItem!
+    @IBOutlet weak var fromCameraButton: UIBarButtonItem!
+    @IBOutlet weak var shareButton: UIButton!
     
     var keyboardHeight: CGFloat = 0.0
     let imagePicker = UIImagePickerController()
@@ -81,11 +84,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func generateMemeImage() -> UIImage{
+        navigationController?.isToolbarHidden = true
+        self.navigationController?.isNavigationBarHidden = true
         UIGraphicsBeginImageContext(self.view.frame.size)
         view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
         let memeImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
-        
+        self.navigationController?.setToolbarHidden(false, animated: false)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         return memeImage
     }
     
@@ -96,6 +102,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         bottomText.defaultTextAttributes = memeTextAttributes
         topText.textAlignment = .center
         bottomText.textAlignment = .center
+        topText.text = "TOP"
+        bottomText.text = "BOTTOM"
 
         topText.delegate = self
         bottomText.delegate = self
@@ -133,6 +141,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         textField.resignFirstResponder()
         if activeField == bottomText{
             imagePickerView.image = generateMemeImage()
+            save()
+            topText.text = ""
+            bottomText.text = ""
         }
         return true
     }
@@ -167,6 +178,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }else{
             noCamera()
         }
+    }
+    
+    @IBAction func shareImageButton(_ sender: UIButton){
+        let image = generateMemeImage()
+        
+        let imageToShare = [image]
+        let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
     }
     
     func noCamera(){

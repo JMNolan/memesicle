@@ -37,35 +37,42 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7uI-LW-Ku8">
-                                        <rect key="frame" x="27" y="207" width="321" height="209"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="209" id="GA2-03-hvw"/>
+                                            <constraint firstAttribute="height" constant="623" id="GA2-03-hvw"/>
                                         </constraints>
                                     </imageView>
-                                    <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Bottom" textAlignment="center" clearsOnBeginEditing="YES" adjustsFontSizeToFit="NO" minimumFontSize="40" translatesAutoresizingMaskIntoConstraints="NO" id="0JS-Qe-rgp">
+                                    <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" clearsOnBeginEditing="YES" adjustsFontSizeToFit="NO" minimumFontSize="40" translatesAutoresizingMaskIntoConstraints="NO" id="0JS-Qe-rgp">
                                         <rect key="frame" x="27" y="522" width="321" height="48"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Top" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="12" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="LNT-Yi-Swp">
-                                        <rect key="frame" x="154" y="44" width="67" height="48"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="12" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="LNT-Yi-Swp">
+                                        <rect key="frame" x="181" y="73" width="13" height="48"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                                     </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GDR-iK-uCa">
+                                        <rect key="frame" x="313" y="16" width="54" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Share">
+                                            <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="7uI-LW-Ku8" firstAttribute="leading" secondItem="yes-o5-AYo" secondAttribute="leading" constant="27" id="9lD-cs-qzy"/>
+                                    <constraint firstItem="7uI-LW-Ku8" firstAttribute="leading" secondItem="yes-o5-AYo" secondAttribute="leading" id="9lD-cs-qzy"/>
                                     <constraint firstItem="0JS-Qe-rgp" firstAttribute="top" secondItem="yes-o5-AYo" secondAttribute="top" constant="522" id="AcE-1B-OxK"/>
-                                    <constraint firstAttribute="bottom" secondItem="LNT-Yi-Swp" secondAttribute="bottom" constant="531" id="Efq-SK-l4M"/>
+                                    <constraint firstAttribute="bottom" secondItem="LNT-Yi-Swp" secondAttribute="bottom" constant="502" id="Efq-SK-l4M"/>
                                     <constraint firstAttribute="bottom" secondItem="0JS-Qe-rgp" secondAttribute="bottom" constant="53" id="XIX-om-dXZ"/>
-                                    <constraint firstItem="7uI-LW-Ku8" firstAttribute="leading" secondItem="0JS-Qe-rgp" secondAttribute="leading" id="ZHT-JG-ej5"/>
-                                    <constraint firstAttribute="trailing" secondItem="7uI-LW-Ku8" secondAttribute="trailing" constant="27" id="Zoy-dm-Uoo"/>
+                                    <constraint firstItem="7uI-LW-Ku8" firstAttribute="leading" secondItem="0JS-Qe-rgp" secondAttribute="leading" constant="-27" id="ZHT-JG-ej5"/>
+                                    <constraint firstAttribute="trailing" secondItem="7uI-LW-Ku8" secondAttribute="trailing" id="Zoy-dm-Uoo"/>
                                     <constraint firstItem="7uI-LW-Ku8" firstAttribute="centerX" secondItem="yes-o5-AYo" secondAttribute="centerX" id="cd8-CI-4fv"/>
                                     <constraint firstItem="0JS-Qe-rgp" firstAttribute="centerX" secondItem="yes-o5-AYo" secondAttribute="centerX" id="p9U-Fk-qPH"/>
                                     <constraint firstItem="7uI-LW-Ku8" firstAttribute="centerY" secondItem="yes-o5-AYo" secondAttribute="centerY" id="swI-I0-991"/>
-                                    <constraint firstItem="LNT-Yi-Swp" firstAttribute="top" secondItem="yes-o5-AYo" secondAttribute="top" constant="44" id="wIf-fN-V7L"/>
+                                    <constraint firstItem="LNT-Yi-Swp" firstAttribute="top" secondItem="yes-o5-AYo" secondAttribute="top" constant="73" id="wIf-fN-V7L"/>
                                     <constraint firstItem="LNT-Yi-Swp" firstAttribute="centerX" secondItem="yes-o5-AYo" secondAttribute="centerX" id="yyX-2P-59o"/>
                                 </constraints>
                             </scrollView>
