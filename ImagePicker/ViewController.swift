@@ -58,21 +58,20 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     //get notifications to use as a trigger for moving the view up when editing the bottom text in the meme
-    func subscribeToKeyboardShowNotifications(){
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-    }
-    
-    func subscribeToKeyboardHideNotifications(){
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    func subscribeToKeyboardNotifications(){
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
+        print("how many licks")
     }
     
     //no longer needed once text is entered completely
-    func unsubscribeToKeyboardShowNotifications(){
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-    }
-    
-    func unsubscribeToKeyboardHideNotifications(){
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    func unsubscribeToKeyboardNotifications(){
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidHide, object: nil)
+        
+        print("how many unclicks")
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -103,21 +102,23 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         imagePicker.delegate = self
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
 
-        self.subscribeToKeyboardShowNotifications()
-        self.subscribeToKeyboardHideNotifications()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+        self.subscribeToKeyboardNotifications()
         
-        self.unsubscribeToKeyboardShowNotifications()
-        self.unsubscribeToKeyboardHideNotifications()
+        print("what is going on?")
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool{
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        self.unsubscribeToKeyboardNotifications()
+        
+        print("What is happening?")
+    }
+    
+    func textFieldShouldReturn(textField: UITextField!) -> Bool{
         textField.resignFirstResponder()
         return true
     }
