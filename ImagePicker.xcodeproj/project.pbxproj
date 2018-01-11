@@ -97,6 +97,7 @@
 		518E4E6D1FFC25C100F76C36 /* ImagePicker */ = {
 			isa = PBXGroup;
 			children = (
+				51CF250B200705210081F56B /* Delegates */,
 				518E4E6E1FFC25C200F76C36 /* AppDelegate.swift */,
 				518E4E701FFC25C200F76C36 /* ViewController.swift */,
 				518E4E721FFC25C200F76C36 /* Main.storyboard */,
@@ -123,6 +124,13 @@
 				518E4E901FFC25C200F76C36 /* Info.plist */,
 			);
 			path = ImagePickerUITests;
+			sourceTree = "<group>";
+		};
+		51CF250B200705210081F56B /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Delegates;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

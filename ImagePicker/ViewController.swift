@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var imagePickerView: UIImageView!
     @IBOutlet weak var bottomText: UITextField!
@@ -17,6 +17,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     var keyboardHeight: CGFloat = 0.0
     let imagePicker = UIImagePickerController()
+    var activeField: UITextField!
     
     //formatting the text boxes used to create the meme
     let memeTextAttributes: [String:Any] = [
@@ -25,7 +26,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         NSAttributedStringKey.font.rawValue: (UIFont.init(name: "HelveticaNeue-CondensedBlack", size: 40))!,
         NSAttributedStringKey.strokeWidth.rawValue: -4,
         NSAttributedStringKey.backgroundColor.rawValue: UIColor.clear,
-        
     ]
     
     //property template for generating new meme images
@@ -59,17 +59,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     //get notifications to use as a trigger for moving the view up when editing the bottom text in the meme
     func subscribeToKeyboardNotifications(){
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         print("how many licks")
     }
     
     //no longer needed once text is entered completely
     func unsubscribeToKeyboardNotifications(){
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidHide, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         print("how many unclicks")
     }
@@ -99,6 +99,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         topText.textAlignment = .center
         bottomText.textAlignment = .center
 
+        topText.delegate = self
+        bottomText.delegate = self
         imagePicker.delegate = self
     }
     
@@ -118,20 +120,36 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         print("What is happening?")
     }
     
-    func textFieldShouldReturn(textField: UITextField!) -> Bool{
+    func textFieldDidBeginEditing(_ textField: UITextField){
+        
+        activeField = textField
+        
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField){
+        
+        activeField = textField
+        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool{
         textField.resignFirstResponder()
         return true
     }
     
     @objc func keyboardWillShow (notification: NSNotification){
-        keyboardHeight = getKeyboardHeight(notification: notification)
-        scrollView.frame.origin.y -= keyboardHeight
-        print(keyboardHeight)
+        if activeField == bottomText{
+            keyboardHeight = getKeyboardHeight(notification: notification)
+            scrollView.frame.origin.y -= keyboardHeight
+            print(keyboardHeight)
+        }
     }
     
     @objc func keyboardWillHide (notification: NSNotification){
-        print(keyboardHeight)
-        scrollView.frame.origin.y += keyboardHeight
+        if activeField.resignFirstResponder(){
+            print(keyboardHeight)
+            scrollView.frame.origin.y += keyboardHeight
+        }
     }
     
     @IBAction func pickAnImageFromAlbum(_ sender: Any) {
