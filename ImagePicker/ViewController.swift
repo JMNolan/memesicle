@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  ImagePicker
+//  Memesicle
 //
 //  Created by John Nolan on 1/2/18.
 //  Copyright © 2018 John Nolan. All rights reserved.
@@ -18,6 +18,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     var keyboardHeight: CGFloat = 0.0
     let imagePicker = UIImagePickerController()
     var activeField: UITextField!
+    var keyboardActive: Bool!
     
     //formatting the text boxes used to create the meme
     let memeTextAttributes: [String:Any] = [
@@ -62,7 +63,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        print("how many licks")
     }
     
     //no longer needed once text is entered completely
@@ -70,8 +70,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        
-        print("how many unclicks")
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -108,31 +106,29 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         super.viewDidAppear(animated)
 
         self.subscribeToKeyboardNotifications()
-        
-        print("what is going on?")
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
         self.unsubscribeToKeyboardNotifications()
-        
-        print("What is happening?")
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField){
         
         activeField = textField
+        keyboardActive = true
         
     }
     
     func textFieldDidEndEditing(_ textField: UITextField){
         
-        activeField = textField
+        activeField = nil
         
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool{
+        keyboardActive = false
         textField.resignFirstResponder()
         return true
     }
@@ -141,13 +137,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         if activeField == bottomText{
             keyboardHeight = getKeyboardHeight(notification: notification)
             scrollView.frame.origin.y -= keyboardHeight
-            print(keyboardHeight)
         }
     }
     
     @objc func keyboardWillHide (notification: NSNotification){
-        if activeField.resignFirstResponder(){
-            print(keyboardHeight)
+        if keyboardActive == false{
             scrollView.frame.origin.y += keyboardHeight
         }
     }

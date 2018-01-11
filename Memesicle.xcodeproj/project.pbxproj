@@ -34,17 +34,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		518E4E6B1FFC25C100F76C36 /* ImagePicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImagePicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		518E4E6B1FFC25C100F76C36 /* Memesicle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memesicle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		518E4E6E1FFC25C200F76C36 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		518E4E701FFC25C200F76C36 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		518E4E731FFC25C200F76C36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		518E4E751FFC25C200F76C36 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		518E4E781FFC25C200F76C36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		518E4E7A1FFC25C200F76C36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		518E4E7F1FFC25C200F76C36 /* ImagePickerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImagePickerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		518E4E7F1FFC25C200F76C36 /* MemesicleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MemesicleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		518E4E831FFC25C200F76C36 /* ImagePickerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerTests.swift; sourceTree = "<group>"; };
 		518E4E851FFC25C200F76C36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		518E4E8A1FFC25C200F76C36 /* ImagePickerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImagePickerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		518E4E8A1FFC25C200F76C36 /* MemesicleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MemesicleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		518E4E8E1FFC25C200F76C36 /* ImagePickerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerUITests.swift; sourceTree = "<group>"; };
 		518E4E901FFC25C200F76C36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -87,9 +87,9 @@
 		518E4E6C1FFC25C100F76C36 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				518E4E6B1FFC25C100F76C36 /* ImagePicker.app */,
-				518E4E7F1FFC25C200F76C36 /* ImagePickerTests.xctest */,
-				518E4E8A1FFC25C200F76C36 /* ImagePickerUITests.xctest */,
+				518E4E6B1FFC25C100F76C36 /* Memesicle.app */,
+				518E4E7F1FFC25C200F76C36 /* MemesicleTests.xctest */,
+				518E4E8A1FFC25C200F76C36 /* MemesicleUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -136,9 +136,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		518E4E6A1FFC25C100F76C36 /* ImagePicker */ = {
+		518E4E6A1FFC25C100F76C36 /* Memesicle */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 518E4E931FFC25C200F76C36 /* Build configuration list for PBXNativeTarget "ImagePicker" */;
+			buildConfigurationList = 518E4E931FFC25C200F76C36 /* Build configuration list for PBXNativeTarget "Memesicle" */;
 			buildPhases = (
 				518E4E671FFC25C100F76C36 /* Sources */,
 				518E4E681FFC25C100F76C36 /* Frameworks */,
@@ -148,14 +148,14 @@
 			);
 			dependencies = (
 			);
-			name = ImagePicker;
+			name = Memesicle;
 			productName = ImagePicker;
-			productReference = 518E4E6B1FFC25C100F76C36 /* ImagePicker.app */;
+			productReference = 518E4E6B1FFC25C100F76C36 /* Memesicle.app */;
 			productType = "com.apple.product-type.application";
 		};
-		518E4E7E1FFC25C200F76C36 /* ImagePickerTests */ = {
+		518E4E7E1FFC25C200F76C36 /* MemesicleTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 518E4E961FFC25C200F76C36 /* Build configuration list for PBXNativeTarget "ImagePickerTests" */;
+			buildConfigurationList = 518E4E961FFC25C200F76C36 /* Build configuration list for PBXNativeTarget "MemesicleTests" */;
 			buildPhases = (
 				518E4E7B1FFC25C200F76C36 /* Sources */,
 				518E4E7C1FFC25C200F76C36 /* Frameworks */,
@@ -166,14 +166,14 @@
 			dependencies = (
 				518E4E811FFC25C200F76C36 /* PBXTargetDependency */,
 			);
-			name = ImagePickerTests;
+			name = MemesicleTests;
 			productName = ImagePickerTests;
-			productReference = 518E4E7F1FFC25C200F76C36 /* ImagePickerTests.xctest */;
+			productReference = 518E4E7F1FFC25C200F76C36 /* MemesicleTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		518E4E891FFC25C200F76C36 /* ImagePickerUITests */ = {
+		518E4E891FFC25C200F76C36 /* MemesicleUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 518E4E991FFC25C200F76C36 /* Build configuration list for PBXNativeTarget "ImagePickerUITests" */;
+			buildConfigurationList = 518E4E991FFC25C200F76C36 /* Build configuration list for PBXNativeTarget "MemesicleUITests" */;
 			buildPhases = (
 				518E4E861FFC25C200F76C36 /* Sources */,
 				518E4E871FFC25C200F76C36 /* Frameworks */,
@@ -184,9 +184,9 @@
 			dependencies = (
 				518E4E8C1FFC25C200F76C36 /* PBXTargetDependency */,
 			);
-			name = ImagePickerUITests;
+			name = MemesicleUITests;
 			productName = ImagePickerUITests;
-			productReference = 518E4E8A1FFC25C200F76C36 /* ImagePickerUITests.xctest */;
+			productReference = 518E4E8A1FFC25C200F76C36 /* MemesicleUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -215,7 +215,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 518E4E661FFC25C100F76C36 /* Build configuration list for PBXProject "ImagePicker" */;
+			buildConfigurationList = 518E4E661FFC25C100F76C36 /* Build configuration list for PBXProject "Memesicle" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -228,9 +228,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				518E4E6A1FFC25C100F76C36 /* ImagePicker */,
-				518E4E7E1FFC25C200F76C36 /* ImagePickerTests */,
-				518E4E891FFC25C200F76C36 /* ImagePickerUITests */,
+				518E4E6A1FFC25C100F76C36 /* Memesicle */,
+				518E4E7E1FFC25C200F76C36 /* MemesicleTests */,
+				518E4E891FFC25C200F76C36 /* MemesicleUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -293,12 +293,12 @@
 /* Begin PBXTargetDependency section */
 		518E4E811FFC25C200F76C36 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 518E4E6A1FFC25C100F76C36 /* ImagePicker */;
+			target = 518E4E6A1FFC25C100F76C36 /* Memesicle */;
 			targetProxy = 518E4E801FFC25C200F76C36 /* PBXContainerItemProxy */;
 		};
 		518E4E8C1FFC25C200F76C36 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 518E4E6A1FFC25C100F76C36 /* ImagePicker */;
+			target = 518E4E6A1FFC25C100F76C36 /* Memesicle */;
 			targetProxy = 518E4E8B1FFC25C200F76C36 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -470,7 +470,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ImagePicker.app/ImagePicker";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Memesicle.app/Memesicle";
 			};
 			name = Debug;
 		};
@@ -486,7 +486,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ImagePicker.app/ImagePicker";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Memesicle.app/Memesicle";
 			};
 			name = Release;
 		};
@@ -523,7 +523,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		518E4E661FFC25C100F76C36 /* Build configuration list for PBXProject "ImagePicker" */ = {
+		518E4E661FFC25C100F76C36 /* Build configuration list for PBXProject "Memesicle" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				518E4E911FFC25C200F76C36 /* Debug */,
@@ -532,7 +532,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		518E4E931FFC25C200F76C36 /* Build configuration list for PBXNativeTarget "ImagePicker" */ = {
+		518E4E931FFC25C200F76C36 /* Build configuration list for PBXNativeTarget "Memesicle" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				518E4E941FFC25C200F76C36 /* Debug */,
@@ -541,7 +541,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		518E4E961FFC25C200F76C36 /* Build configuration list for PBXNativeTarget "ImagePickerTests" */ = {
+		518E4E961FFC25C200F76C36 /* Build configuration list for PBXNativeTarget "MemesicleTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				518E4E971FFC25C200F76C36 /* Debug */,
@@ -550,7 +550,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		518E4E991FFC25C200F76C36 /* Build configuration list for PBXNativeTarget "ImagePickerUITests" */ = {
+		518E4E991FFC25C200F76C36 /* Build configuration list for PBXNativeTarget "MemesicleUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				518E4E9A1FFC25C200F76C36 /* Debug */,
