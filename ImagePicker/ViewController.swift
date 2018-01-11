@@ -118,18 +118,22 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         activeField = textField
         keyboardActive = true
+        becomeFirstResponder()
         
     }
     
     func textFieldDidEndEditing(_ textField: UITextField){
         
-        activeField = nil
+//        activeField = nil
         
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool{
-        keyboardActive = false
+//        keyboardActive = false
         textField.resignFirstResponder()
+        if activeField == bottomText{
+            imagePickerView.image = generateMemeImage()
+        }
         return true
     }
     
