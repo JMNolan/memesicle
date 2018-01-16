@@ -187,7 +187,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         activityViewController.popoverPresentationController?.sourceView = self.view
         self.present(activityViewController, animated: true, completion: nil)
         //UIActivityViewControllerCompletionWithItemsHandler = {(activityViewController!, completed: Bool)
-        }
+        //}
     }
     
     func noCamera(){
