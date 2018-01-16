@@ -17,6 +17,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var fromAlbumButton: UIBarButtonItem!
     @IBOutlet weak var fromCameraButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIButton!
+    @IBOutlet weak var toolbar: UIToolbar!
     
     var keyboardHeight: CGFloat = 0.0
     let imagePicker = UIImagePickerController()
@@ -84,14 +85,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func generateMemeImage() -> UIImage{
-        navigationController?.isToolbarHidden = true
-        self.navigationController?.isNavigationBarHidden = true
+        toolbar.isHidden = true
+        shareButton.isHidden = true
         UIGraphicsBeginImageContext(self.view.frame.size)
         view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
         let memeImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
-        self.navigationController?.setToolbarHidden(false, animated: false)
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        toolbar.isHidden = false
+        shareButton.isHidden = false
         return memeImage
     }
     
@@ -137,14 +138,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool{
-//        keyboardActive = false
         textField.resignFirstResponder()
-        if activeField == bottomText{
-            imagePickerView.image = generateMemeImage()
-            save()
-            topText.text = ""
-            bottomText.text = ""
-        }
+//        if activeField == bottomText{
+//            imagePickerView.image = generateMemeImage()
+//            save()
+//            topText.text = ""
+//            bottomText.text = ""
+//        }
         return true
     }
     
@@ -182,10 +182,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBAction func shareImageButton(_ sender: UIButton){
         let image = generateMemeImage()
-        
         let imageToShare = [image]
         let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = self.view
+        self.present(activityViewController, animated: true, completion: nil)
+        //UIActivityViewControllerCompletionWithItemsHandler = {(activityViewController!, completed: Bool)
+        }
     }
     
     func noCamera(){
