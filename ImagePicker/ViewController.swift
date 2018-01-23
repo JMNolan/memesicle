@@ -99,7 +99,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         //format the two text fields
         topText.defaultTextAttributes = memeTextAttributes
         bottomText.defaultTextAttributes = memeTextAttributes
@@ -133,8 +132,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField){
-    }
+//    func textFieldDidEndEditing(_ textField: UITextField){
+//    }
     
     //keyboard disappears when the user presses enter
     func textFieldShouldReturn(_ textField: UITextField) -> Bool{
@@ -150,7 +149,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             topText.frame.origin.y -= keyboardHeight
             bottomText.frame.origin.y -= keyboardHeight
             toolbar.frame.origin.y -= keyboardHeight
-            //shareButton.frame.origin.y -= keyboardHeight
         }
     }
     
