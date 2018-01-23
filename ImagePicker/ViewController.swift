@@ -17,11 +17,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var fromCameraButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var toolbar: UIToolbar!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     var keyboardHeight: CGFloat = 0.0
     let imagePicker = UIImagePickerController()
-    var bottomTextFieldActive: Bool!
+    var activeTextField: UITextField!
     var keyboardActive: Bool!
+    var originalBottomInset: CGFloat!
 
     //formatting the text boxes used to create the meme
     let memeTextAttributes: [String:Any] = [
@@ -125,11 +127,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func textFieldDidBeginEditing(_ textField: UITextField){
         //set active text field to make sure view only shifts when the keyboard is being used on the bottom text field and make keyboard appear
-        if textField == bottomText{
-            bottomTextFieldActive = true
-        }else{
-            bottomTextFieldActive = false
-        }
+        activeTextField = textField
     }
     
 //    func textFieldDidEndEditing(_ textField: UITextField){
@@ -143,23 +141,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     //moves the view up when the keyboard appears to keep the text field visible
     @objc func keyboardWillShow (notification: NSNotification){
-        if bottomTextFieldActive == true{
+        originalBottomInset = scrollView.contentInset.bottom
+        if activeTextField == bottomText{
+            scrollView.contentInset.bottom = keyboardHeight
             keyboardHeight = getKeyboardHeight(notification: notification)
-            imagePickerView.frame.origin.y -= keyboardHeight
-            topText.frame.origin.y -= keyboardHeight
-            bottomText.frame.origin.y -= keyboardHeight
-            toolbar.frame.origin.y -= keyboardHeight
         }
     }
     
     //moves the view down when the keyboard is dismissed to show the full view again
     @objc func keyboardWillHide (notification: NSNotification){
-        imagePickerView.frame.origin.y += keyboardHeight
-        topText.frame.origin.y += keyboardHeight
-        bottomText.frame.origin.y += keyboardHeight
-        toolbar.frame.origin.y += keyboardHeight
-        //shareButton.frame.origin.y += keyboardHeight
-        print("keyboard just hid")
+        scrollView.contentInset.bottom = originalBottomInset
     }
     
     //user presses album button and selects a photo from their library
