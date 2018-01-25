@@ -13,17 +13,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var imagePickerView: UIImageView!
     @IBOutlet weak var bottomText: UITextField!
     @IBOutlet weak var topText: UITextField!
-    @IBOutlet weak var fromAlbumButton: UIBarButtonItem!
     @IBOutlet weak var fromCameraButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var toolbar: UIToolbar!
-    @IBOutlet weak var scrollView: UIScrollView!
     
     var keyboardHeight: CGFloat = 0.0
     let imagePicker = UIImagePickerController()
     var activeTextField: UITextField!
     var keyboardActive: Bool!
-    var originalBottomInset: CGFloat!
 
     //formatting the text boxes used to create the meme
     let memeTextAttributes: [String:Any] = [
@@ -51,8 +48,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        shareButton.isEnabled = true
+        bottomText.isEnabled = true
+        topText.isEnabled = true
         imagePickerView.image = image
         imagePickerView.contentMode = .scaleAspectFit
+        topText.text = "TOP"
+        bottomText.text = "BOTTOM"
         dismiss(animated: true, completion: nil)
     }
     
@@ -82,20 +84,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         dismiss(animated: true, completion: nil)
     }
     
-//    func save(){
-//        let meme = Meme(topText: topText.text!, bottomText: bottomText.text!, selectedImage: imagePickerView.image!, memeImage: generateMemeImage())
-//    }
-    
     //create a meme using the information on the screen after hiding the toolbar and buttons on the screen. Then add the buttons and toolbar back after the meme is generated
     func generateMemeImage() -> UIImage{
         toolbar.isHidden = true
-        //shareButton.isHidden = true
         UIGraphicsBeginImageContext(self.view.frame.size)
         view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
         let memeImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         toolbar.isHidden = false
-        //shareButton.isHidden = false
         return memeImage
     }
     
@@ -106,11 +102,22 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         bottomText.defaultTextAttributes = memeTextAttributes
         topText.textAlignment = .center
         bottomText.textAlignment = .center
-        topText.text = "TOP"
-        bottomText.text = "BOTTOM"
+        topText.text = ""
+        bottomText.text = ""
         topText.delegate = self
         bottomText.delegate = self
         imagePicker.delegate = self
+        topText.isEnabled = false
+        bottomText.isEnabled = false        
+        //check for a camera on the device and disable the camera button if there is not one
+        if !UIImagePickerController.isSourceTypeAvailable(.camera){
+            fromCameraButton.isEnabled = false
+        }
+        
+        //enable or disable the share button according to whether or not the user has selected an image
+        if imagePickerView.image == nil{
+            shareButton.isEnabled = false
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -126,12 +133,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField){
-        //set active text field to make sure view only shifts when the keyboard is being used on the bottom text field and make keyboard appear
+        //set active text field to make sure view only shifts when the keyboard is being used on the bottom text field
         activeTextField = textField
     }
-    
-//    func textFieldDidEndEditing(_ textField: UITextField){
-//    }
     
     //keyboard disappears when the user presses enter
     func textFieldShouldReturn(_ textField: UITextField) -> Bool{
@@ -141,16 +145,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     //moves the view up when the keyboard appears to keep the text field visible
     @objc func keyboardWillShow (notification: NSNotification){
-        originalBottomInset = scrollView.contentInset.bottom
         if activeTextField == bottomText{
-            scrollView.contentInset.bottom = keyboardHeight
-            keyboardHeight = getKeyboardHeight(notification: notification)
+            view.frame.origin.y -= getKeyboardHeight(notification: notification)
         }
     }
     
     //moves the view down when the keyboard is dismissed to show the full view again
     @objc func keyboardWillHide (notification: NSNotification){
-        scrollView.contentInset.bottom = originalBottomInset
+        if activeTextField == bottomText{
+        view.frame.origin.y += getKeyboardHeight(notification: notification)
+        }
     }
     
     //user presses album button and selects a photo from their library
@@ -163,20 +167,25 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     //user presses camera button to take a picture with device camera to use that picture as the base of their meme
     @IBAction func pickAnImageFromCamera(_ sender: Any){
-        if UIImagePickerController.isSourceTypeAvailable(.camera){
             imagePicker.allowsEditing = false
             imagePicker.sourceType = UIImagePickerControllerSourceType.camera
             imagePicker.cameraCaptureMode = .photo
             imagePicker.modalPresentationStyle = .fullScreen
             present(imagePicker, animated: true, completion: nil)
-        }else{
-            //handles the possibility that the device has no camera when the user presses the camera button
-            noCamera()
-        }
+    }
+    
+    //returns the app back to original state to begin making a new meme
+    @IBAction func cancelEverything(_ sender: UIBarButtonItem) {
+        imagePickerView.image = nil
+        topText.text = nil
+        bottomText.text = nil
+        topText.isEnabled = false
+        bottomText.isEnabled = false
+        shareButton.isEnabled = false
     }
     
     //user presses share button to show options for sharing or saving in several ways
-    @IBAction func shareImageButton(_ sender: UIButton){
+    @IBAction func shareImageButton(_ sender: UIBarButtonItem){
         let image = generateMemeImage()
         let imageToShare = [image]
         let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
@@ -185,15 +194,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         activityViewController.completionWithItemsHandler = {(activity, success, items, error) in
             activityViewController.dismiss(animated: true, completion: nil)
         }
-
     }
     
-    //give the user a message if the device has not camera
-    func noCamera(){
-        let noCameraAlert = UIAlertController(title: "No Camera", message: "Sorry this device has no camera.", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        noCameraAlert.addAction(okAction)
-        present(noCameraAlert, animated: true, completion: nil)
-    }
 }
 
