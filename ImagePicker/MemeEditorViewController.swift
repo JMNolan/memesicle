@@ -161,8 +161,8 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     //used to set up picking an image from an album and the camera
     func pickAnImage(type: UIImagePickerControllerSourceType){
         imagePicker.allowsEditing = false
-        present(imagePicker, animated: true, completion: nil)
         imagePicker.sourceType = type
+        present(imagePicker, animated: true, completion: nil)
     }
     
     //user presses album button and selects a photo from their library
@@ -173,9 +173,9 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     
     //user presses camera button to take a picture with device camera to use that picture as the base of their meme
     @IBAction func pickAnImageFromCamera(_ sender: Any){
-            imagePicker.cameraCaptureMode = .photo
             imagePicker.modalPresentationStyle = .fullScreen
             pickAnImage(type: .camera)
+            imagePicker.cameraCaptureMode = .photo
     }
     
     //returns the app back to original state to begin making a new meme
@@ -202,9 +202,13 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         activityViewController.popoverPresentationController?.sourceView = self.view
         self.present(activityViewController, animated: true, completion: nil)
         activityViewController.completionWithItemsHandler = {(activity, success, items, error) in
-            self.saveMeme()
+            if success{
+                self.saveMeme()
+            }
             activityViewController.dismiss(animated: true, completion: nil)
+            self.present(activityViewController, animated: true, completion: nil)
         }
+        
     }
     
 }
