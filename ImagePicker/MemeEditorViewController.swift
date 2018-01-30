@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var imagePickerView: UIImageView!
     @IBOutlet weak var bottomText: UITextField!
@@ -16,11 +16,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var fromCameraButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var toolbar: UIToolbar!
+    @IBOutlet weak var navigationBar: UINavigationBar!
     
     var keyboardHeight: CGFloat = 0.0
     let imagePicker = UIImagePickerController()
     var activeTextField: UITextField!
     var keyboardActive: Bool!
+    var savedMeme: Array<Any>!
 
     //formatting the text boxes used to create the meme
     let memeTextAttributes: [String:Any] = [
@@ -36,14 +38,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let topText: String
         let bottomtext: String
         let selectedImage: UIImage
-        let memeImage: UIImage
-        
-        init (topText: String, bottomText: String, selectedImage: UIImage, memeImage: UIImage){
-            self.topText = topText
-            self.bottomtext = bottomText
-            self.selectedImage = selectedImage
-            self.memeImage = memeImage
-        }
+        let memeImage: UIImage        
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -74,9 +69,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     //no longer needed once text is entered completely
     func unsubscribeToKeyboardNotifications(){
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.removeObserver(self)
     }
     
     // dismiss the image picker after user selects image
@@ -86,38 +79,27 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     //create a meme using the information on the screen after hiding the toolbar and buttons on the screen. Then add the buttons and toolbar back after the meme is generated
     func generateMemeImage() -> UIImage{
-        toolbar.isHidden = true
+        hideBothBars(hide: true)
         UIGraphicsBeginImageContext(self.view.frame.size)
         view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
         let memeImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
-        toolbar.isHidden = false
+        hideBothBars(hide: false)
         return memeImage
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //format the two text fields
-        topText.defaultTextAttributes = memeTextAttributes
-        bottomText.defaultTextAttributes = memeTextAttributes
-        topText.textAlignment = .center
-        bottomText.textAlignment = .center
-        topText.text = ""
-        bottomText.text = ""
-        topText.delegate = self
-        bottomText.delegate = self
+        configureTextField(textField: bottomText)
+        configureTextField(textField: topText)
         imagePicker.delegate = self
-        topText.isEnabled = false
-        bottomText.isEnabled = false        
+        
         //check for a camera on the device and disable the camera button if there is not one
-        if !UIImagePickerController.isSourceTypeAvailable(.camera){
-            fromCameraButton.isEnabled = false
-        }
+        fromCameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         
         //enable or disable the share button according to whether or not the user has selected an image
-        if imagePickerView.image == nil{
-            shareButton.isEnabled = false
-        }
+        shareButton.isEnabled = imagePickerView.image != nil
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -143,45 +125,73 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         return true
     }
     
+    func hideBothBars(hide: Bool){
+        if hide == true{
+            toolbar.isHidden = true
+            navigationBar.isHidden = true
+        }else{
+            toolbar.isHidden = false
+            navigationBar.isHidden = false
+        }
+    }
+    
+    func configureTextField(textField: UITextField){
+        textField.defaultTextAttributes = memeTextAttributes
+        textField.textAlignment = .center
+        textField.text = ""
+        textField.delegate = self
+        textField.isEnabled = false
+    }
+    
     //moves the view up when the keyboard appears to keep the text field visible
     @objc func keyboardWillShow (notification: NSNotification){
-        if activeTextField == bottomText{
+        if bottomText.isFirstResponder{
             view.frame.origin.y -= getKeyboardHeight(notification: notification)
         }
     }
     
     //moves the view down when the keyboard is dismissed to show the full view again
     @objc func keyboardWillHide (notification: NSNotification){
-        if activeTextField == bottomText{
-        view.frame.origin.y += getKeyboardHeight(notification: notification)
+        if bottomText.isFirstResponder{
+        //view.frame.origin.y += getKeyboardHeight(notification: notification)
+        view.frame.origin.y = 0
         }
+    }
+    
+    //used to set up picking an image from an album and the camera
+    func pickAnImage(type: UIImagePickerControllerSourceType){
+        imagePicker.allowsEditing = false
+        present(imagePicker, animated: true, completion: nil)
+        imagePicker.sourceType = type
     }
     
     //user presses album button and selects a photo from their library
     @IBAction func pickAnImageFromAlbum(_ sender: Any) {
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .photoLibrary
         imagePicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
-        present(imagePicker, animated: true, completion: nil)
+        pickAnImage(type: .photoLibrary)
     }
     
     //user presses camera button to take a picture with device camera to use that picture as the base of their meme
     @IBAction func pickAnImageFromCamera(_ sender: Any){
-            imagePicker.allowsEditing = false
-            imagePicker.sourceType = UIImagePickerControllerSourceType.camera
             imagePicker.cameraCaptureMode = .photo
             imagePicker.modalPresentationStyle = .fullScreen
-            present(imagePicker, animated: true, completion: nil)
+            pickAnImage(type: .camera)
     }
     
     //returns the app back to original state to begin making a new meme
     @IBAction func cancelEverything(_ sender: UIBarButtonItem) {
         imagePickerView.image = nil
-        topText.text = nil
-        bottomText.text = nil
+        topText.text = ""
+        bottomText.text = ""
         topText.isEnabled = false
         bottomText.isEnabled = false
         shareButton.isEnabled = false
+    }
+    
+    //function to save the meme once the user chooses to share their image
+    func saveMeme(){
+        let meme = Meme(topText: topText.text!, bottomtext: bottomText.text!, selectedImage: imagePickerView.image!, memeImage: generateMemeImage() )
+        savedMeme.append(meme)
     }
     
     //user presses share button to show options for sharing or saving in several ways
@@ -192,6 +202,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         activityViewController.popoverPresentationController?.sourceView = self.view
         self.present(activityViewController, animated: true, completion: nil)
         activityViewController.completionWithItemsHandler = {(activity, success, items, error) in
+            self.saveMeme()
             activityViewController.dismiss(animated: true, completion: nil)
         }
     }
