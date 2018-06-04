@@ -1,25 +1,19 @@
 
-160-mark-white.png	
-App Specification: MemeMe 1.0, Meme Editor
+# MemeMe 1.0, Meme Editor
 
 iOS Developer Nanodegree
 
 
 MemeMe 1.0 is a meme-generating app that enables a user to attach a caption to a picture from their phone. After adding text to an image chosen from the Photo Album or Camera, the user can share it with friends.
 
-Meme Editor View
+## Meme Editor View
 The Meme Editor View consists of an image view overlaid by two text fields, one near the top and one near the bottom of the image. This view has a bottom toolbar with two buttons: one for the camera and one for the photo album. The top navigation bar has a share button on the left displaying Apple’s stock share icon and a “Cancel” button on the right.
-
-
-
 
 
 ![Blank Meme Editor](readMeImages/blankMemeEditor.png "Blank meme editor that user starts with") ![Example of meme editor filled with info](readMeImages/memeEditorLandscape.png "Meme editor filled in in landscape mode")
 
 
-
-
-User Flow
+## User Flow
 When the user first launches the app the Meme Editor View will appear.
 
 
