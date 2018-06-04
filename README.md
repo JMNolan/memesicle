@@ -18,7 +18,7 @@ The Meme Editor View consists of an image view overlaid by two text fields, one 
 
 
 
-screen1_MemeMe.png
+![Blank Meme Editor](readMeImages/blankMemeEditor.png "Blank meme editor that user starts with")
 
 
 
